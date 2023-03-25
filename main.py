@@ -1,30 +1,69 @@
-from Juego import Juego as j
+from Juego import Juego
 import Estante as e
+
+import re
+
+status = ["EN STOCK ", "AGOTADO"]
+
+
+def validar_input(string):
+    pattern = re.compile("^[a-zA-Z]{6}[0-9]{2}$")
+    if pattern.match(string):
+        print("El modelo del videojuego es válido.")
+    else:
+        print("El modelo debe contener 6 letras y 2 números: ")
 
 
 def mostrarJuegos():
-    print('Aquí se muestran los juegos')
+    video_juegos = []
+    try:
+        with open("db_juegos.txt") as dbe:
+            datos = dbe.readlines()
+        if len(datos) == 0:
+            print("\nTodavía no hay ningún juego registrado.\n")
+        else:
+            for dato in datos:
+                juego = dato[:-1].split("//")
+                video_juegos.append(Juego(juego[0],juego[1],juego[2]))
+
+            print("\n********** JUEGOS REGISTRADOS ********** ")
+            for i,vid1 in enumerate(video_juegos):
+                print("\n")
+                print("-"*6,str(i+1),"-"*6)
+                print(vid1.mostrar_juego())
+            return True
+
+    except FileNotFoundError:
+        print("\nTodavía no hay ningún juego registrado.\n")
+        return False
 
 
 def agregarJuego():
-    # print('Aquí se agrega el juego')
+    while True:
+        modelo = input(
+            "Ingrese los primeros dígitos del título del videojuego (6 letras) y los dígitos de la cota (2 números): ").upper()
+        try:
+            validar_input(modelo)
+            break
+        except (ValueError):
+            print("error")
 
-    modelo = "hola"
-    titulo = "holaaa"
-    precio = 2
+    titulo = input("Ingrese el título del videojuego: ").capitalize()
 
-    juego = juego(modelo, titulo, precio)
-    with open("db_juegos.txt", "a") as j:
-        j.write(
-            f"Modelo: {modelo}, Titulo: {titulo}, Precio: {precio}\n")
-        
-        return juego
+    while not titulo.isalpha() or len(titulo) > 10:
+        titulo = input(
+            "El título debe contener máximo 10 caracteres: ").capitalize()
 
-# letras_modelo = input(
-#     "Ingrese los primeros 6 dígitos del título del videojuego (letras): ", maxlength=6)
-# while not letras_modelo.isalpha:
-#     letras_modelo = input(
-#         "Ingrese los primeros 6 dígitos del título del videojuego (letras): ")
+    precio = input("Ingrese el precio del videojuego: ")
+    while not precio.isalnum() or int(precio) not in range(1, 999):
+        precio = input("Ingreso inválido. Ingrese el precio del videojuego: ")
+
+    video_juego = Juego(modelo, titulo, precio, status)
+    with open("db_juegos.txt", "a+") as dbe:
+        dbe.write(f"{modelo}//{titulo}//{precio}//{status[0]}\n")
+
+    print("\nVideojuego guardado con éxito.")
+    return video_juego
 
 
 def buscarJuegoModelo():

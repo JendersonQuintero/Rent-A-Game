@@ -29,3 +29,7 @@ class Juego:
 
     def set_status(self, new_status):
         self.set_status = new_status
+
+    def mostrar_juego(self):
+ 
+        return (f"\nModelo: {self.modelo}\nTítulo: {self.titulo}\nPrecio: ${self.precio}\nStatus: {self.status}")
