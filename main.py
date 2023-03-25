@@ -1,4 +1,4 @@
-import Juego as j
+from Juego import Juego as j
 import Estante as e
 
 
@@ -7,7 +7,24 @@ def mostrarJuegos():
 
 
 def agregarJuego():
-    print('Aquí se agrega el juego')
+    # print('Aquí se agrega el juego')
+
+    modelo = "hola"
+    titulo = "holaaa"
+    precio = 2
+
+    juego = juego(modelo, titulo, precio)
+    with open("db_juegos.txt", "a") as j:
+        j.write(
+            f"Modelo: {modelo}, Titulo: {titulo}, Precio: {precio}\n")
+        
+        return juego
+
+# letras_modelo = input(
+#     "Ingrese los primeros 6 dígitos del título del videojuego (letras): ", maxlength=6)
+# while not letras_modelo.isalpha:
+#     letras_modelo = input(
+#         "Ingrese los primeros 6 dígitos del título del videojuego (letras): ")
 
 
 def buscarJuegoModelo():
@@ -31,13 +48,14 @@ def eliminarJuego():
 
 
 if __name__ == '__main__':
+    print("\n")
     print('         ********** BIENVENIDO A RENT A GAME *********\n')
 
     opcion: int
 
     while True:
         try:
-            opcion = int(input('''Acontinuación se muestra el menú de opciones para los juegos:
+            opcion = int(input('''A continuación se muestra el menú de opciones para los juegos:
             
             1 --> Mostrar
             2 --> Agregar
@@ -64,7 +82,7 @@ if __name__ == '__main__':
             elif (opcion == 3):
                 while True:
                     try:
-                        opcion = int(input('''\nSeleccione su tipo de busqueda:
+                        opcion = int(input('''\nSeleccione su tipo de búsqueda:
                         
                             1 --> Por Modelo
                             2 --> Por título
