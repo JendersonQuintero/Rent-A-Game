@@ -1,12 +1,15 @@
 from Juego import Juego
 import Estante as e
+import Base_Datos
 
 import re
 
-status = ["EN STOCK ", "AGOTADO"]
+status = ["EN STOCK", "AGOTADO"]
+
+bd = Base_Datos.Base_Datos()
 
 
-def validar_input(string):
+def validar_modelo(string):
     pattern = re.compile("^[a-zA-Z]{6}[0-9]{2}$")
     if pattern.match(string):
         print("El modelo del videojuego es válido.")
@@ -15,6 +18,7 @@ def validar_input(string):
 
 
 def mostrarJuegos():
+
     video_juegos = []
     try:
         with open("db_juegos.txt") as dbe:
@@ -24,12 +28,12 @@ def mostrarJuegos():
         else:
             for dato in datos:
                 juego = dato[:-1].split("//")
-                video_juegos.append(Juego(juego[0],juego[1],juego[2]))
+                video_juegos.append(Juego(juego[0], juego[1], juego[2]))
 
             print("\n********** JUEGOS REGISTRADOS ********** ")
-            for i,vid1 in enumerate(video_juegos):
+            for i, vid1 in enumerate(video_juegos):
                 print("\n")
-                print("-"*6,str(i+1),"-"*6)
+                print("-"*6, str(i+1), "-"*6)
                 print(vid1.mostrar_juego())
             return True
 
@@ -43,7 +47,7 @@ def agregarJuego():
         modelo = input(
             "Ingrese los primeros dígitos del título del videojuego (6 letras) y los dígitos de la cota (2 números): ").upper()
         try:
-            validar_input(modelo)
+            validar_modelo(modelo)
             break
         except (ValueError):
             print("error")
