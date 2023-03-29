@@ -8,15 +8,11 @@ from Hashing import Hashing
 
 class Estante_Juegos:
 
-    estante_principal = [['V', 'V', 'V'],
-                         ['V', 'V', 'V'],
-                         ['V', 'V', 'V']]
+    estante_principal = [[] * 3]
 
     indice_titulo = []
 
-    estante_overflow = [
-        ['V', 'V', 'V'], ['V', 'V', 'V'], ['V', 'V', 'V'],
-        ['V', 'V', 'V'], ['V', 'V', 'V'], ['V', 'V', 'V']]
+    estante_overflow = [[] * 6]
 
     def __init__(self):
         self
@@ -25,14 +21,12 @@ class Estante_Juegos:
         print('\n************** ESTANTE PRINCIPAL DE JUEGOS **************')
         for grupo in self.estante_principal:
             for juego in grupo:
-                if (juego != 'V'):
-                    self.mostrar_juego(juego)
+                self.mostrar_juego(juego)
 
         print('\n************** ESTANTE OVERFLOW DE JUEGOS **************\n')
         for grupo in self.estante_overflow:
             for juego in grupo:
-                if (juego != 'V'):
-                    self.mostrar_juego(juego)
+                self.mostrar_juego(juego)
 
     def mostrar_juego(self, juego: Juego) -> None:
         print(
@@ -42,12 +36,10 @@ class Estante_Juegos:
         ubicacion: tuple = Hashing.func_hash(
             juego.get_modelo(), self.estante_principal, self.estante_overflow)
 
-        if (ubicacion[2] == 'P'):
-            self.estante_principal[ubicacion[0]
-                                   ][ubicacion[1]] = juego
+        if (ubicacion[1] == 'P'):
+            self.estante_principal[ubicacion[0]].append(juego)
         else:
-            self.estante_overflow[ubicacion[0]
-                                  ][ubicacion[1]] = juego
+            self.estante_overflow[ubicacion[0]].append(juego)
 
         self.indice_titulo.append(Indice(juego.get_titulo(), ubicacion))
 
@@ -99,12 +91,12 @@ class Estante_Juegos:
         return None
 
 
-juego = Juego('SPACEI13', 'La Prueba', 999)
-juego2 = Juego('ABCDEF99', 'El Cambio', 666)
-estante = Estante_Juegos()
-estante.insertar(juego)
-estante.insertar(juego2)
+# juego = Juego('SPACEI13', 'La Prueba', 999)
+# juego2 = Juego('ABCDEF99', 'El Cambio', 666)
+# estante = Estante_Juegos()
+# estante.insertar(juego)
+# estante.insertar(juego2)
 
-estante.mostrar_juegos()
+# estante.mostrar_juegos()
 
 # print(estante.buscar_titulo('La Prueba').get_modelo())

@@ -1,8 +1,9 @@
 class Hashing:
+
     def __init__(self) -> None:
         self
 
-    def func_hash(clave: str, list_p: list, list_o: list):
+    def hash(clave: str, espacio: int) -> int:
         acumulador: int = 0
         suma_num: int = 0
         for i in range(len(clave)):
@@ -10,55 +11,46 @@ class Hashing:
             if (ord(clave[i]) >= 48 and ord(clave[i]) <= 57):
                 suma_num += int(clave[i])
 
-        grupo: int = (acumulador // suma_num) % len(list_p)
-        grupo_max = False
+        grupo: int = (acumulador // suma_num) % espacio
 
-        if (grupo == (len(list_p) - 1)):
-            grupo_max = True
+        return grupo
 
-        for i in range(len(list_p[grupo])):
-            if (list_p[grupo][i] == 'V'):
-                return grupo, i, 'P'
-            else:
-                continue
+    def func_hash(self, clave: str, list_p: list, list_o: list):
+        capacidad_max_gp: int = 3
+        capacidad_max_go: int = 3
+
+        grupo: int = self.hash(clave, len(list_p))
+
+        if (len(list_p[grupo]) <= capacidad_max_gp):
+            return grupo, 'P'
 
         # ***** INICIO DEL OVERFLOW *****
 
-        grupo_overflow: int = (acumulador // suma_num) % len(list_o)
-        grupo_max = False
+        grupo_overflow: int = self.hash(clave, len(list_o))
+        grupo_max: bool = False
 
         if (grupo_overflow == (len(list_o) - 1)):
             grupo_max = True
 
         while True:
-            for i in range(len(list_o[grupo_overflow])):
-                if (list_o[grupo_overflow][i] == 'V'):
-                    return grupo_overflow, i, 'O'
-                else:
-                    continue
+
+            if (len(list_o[grupo_overflow]) <= capacidad_max_go):
+                return grupo_overflow, 'O'
 
             if (grupo_max):
                 grupo_overflow = 0
-                for i in range(len(list_o[grupo_overflow]) - 1):
-                    if (list_o[grupo_overflow][i] == 'V'):
-                        return grupo_overflow, i, 'O'
-                    else:
+
+                while True:
+                    if (len(list_o[grupo_overflow]) <= capacidad_max_go):
+                        return grupo_overflow, 'O'
+                    elif (grupo_overflow < (len(list_o) - 1)):
                         grupo_overflow += 1
-            elif (grupo_overflow < (len(list_o) - 1)):
-                grupo_overflow += 1
-            else:
-                break
+                    else:
+                        break
 
-    def buscar_hash(clave: str, list_p: list, list_o: list):
-        acumulador: int = 0
-        suma_num: int = 0
-        for i in range(len(clave)):
-            acumulador += ord(clave[i])
-            if (ord(clave[i]) >= 48 and ord(clave[i]) <= 57):
-                suma_num += int(clave[i])
+    def buscar_hash(self, clave: str, list_p: list, list_o: list):
 
-        grupo: int = (acumulador // suma_num) % len(list_p)
-
+        grupo: int = self.hash(clave, len(list_p))
         grupo_max = False
 
         if (grupo == (len(list_p) - 1)):
@@ -72,7 +64,7 @@ class Hashing:
 
         # ***** BUSQUEDA EN OVERFLOW *****
 
-        grupo_overflow: int = (acumulador // suma_num) % len(list_o)
+        grupo_overflow: int = self.hash(clave, len(list_o))
         grupo_max = False
 
         if (grupo_overflow == (len(list_o) - 1)):
