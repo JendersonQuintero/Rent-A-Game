@@ -1,14 +1,12 @@
-import Juego
+from Juego import Juego
 
 
 class Base_Datos:
 
-    Juegos = [Juego]
+    def __init__(self) -> None:
+        self.video_juegos: list[Juego] = []
 
-    def __init__(self):
-        self.video_juegos: list = []
-
-    def cargar_Juegos(self) -> Juegos:
+    def cargar_Juegos(self) -> list[Juego]:
         try:
             with open("db_juegos.txt") as dbe:
                 datos = dbe.readlines()
@@ -22,5 +20,14 @@ class Base_Datos:
 
                 return self.video_juegos
 
+        except FileNotFoundError:
+            return False
+
+    def guardar_juego(self, juego: Juego) -> None:
+        try:
+            with open("db_juegos.txt", "a+") as dbe:
+                dbe.write(
+                    f"{juego.get_modelo()}//{juego.get_titulo()}//{juego.get_precio()}//{juego.get_status()}\n")
+            return None
         except FileNotFoundError:
             return False

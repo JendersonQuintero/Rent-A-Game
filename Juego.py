@@ -12,23 +12,20 @@ class Juego:
     def get_titulo(self) -> str:
         return self.titulo
 
-    def get_precio(self) -> str:
+    def get_precio(self) -> int:
         return self.precio
 
     def get_status(self) -> str:
         return self.status
 
-    def set_modelo(self, new_modelo):
+    def set_modelo(self, new_modelo) -> None:
         self.modelo = new_modelo
 
-    def set_titulo(self, new_titulo):
+    def set_titulo(self, new_titulo) -> None:
         self.titulo = new_titulo
 
-    def set_precio(self, new_precio):
+    def set_precio(self, new_precio) -> None:
         self.precio = new_precio
 
-    def set_status(self, new_status):
+    def set_status(self, new_status) -> None:
         self.set_status = new_status
-
-    def mostrar_juego(self):
-        return (f"\nModelo: {self.modelo}\nTítulo: {self.titulo}\nPrecio: ${self.precio}\nStatus: {self.status}")
