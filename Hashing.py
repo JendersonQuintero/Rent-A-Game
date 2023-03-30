@@ -17,8 +17,8 @@ class Hashing:
         return grupo
 
     def func_hash(self, clave: str, list_p: list, list_o: list) -> tuple:
-        capacidad_max_gp: int = 3
-        capacidad_max_go: int = 3
+        capacidad_max_gp: int = 2
+        capacidad_max_go: int = 2
 
         grupo: int = self.hash(clave, len(list_p))
 
