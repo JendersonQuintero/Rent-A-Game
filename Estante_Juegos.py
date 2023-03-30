@@ -9,11 +9,10 @@ hashing = h.Hashing()
 
 class Estante_Juegos:
 
-    estante_principal: list = [[] * 3]
+    estante_principal: list = [[] for i in range(3)]
+    estante_overflow: list = [[] for i in range(6)]
 
     indice_titulo: list[Indice] = []
-
-    estante_overflow: list = [[] * 6]
 
     def __init__(self) -> None:
         self
@@ -96,7 +95,7 @@ class Estante_Juegos:
         return None
 
     def alquilar(self, juego: Juego) -> None:
-        juego.set_status('ALQUILADO')
+        nuevo_juego: Juego = juego.set_status('ALQUILADO')
         return None
 
     def devolver(self, juego: Juego) -> None:

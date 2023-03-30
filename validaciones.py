@@ -1,5 +1,5 @@
 import re
-import Estante as e
+import Estante_Juegos as e
 from Juego import Juego
 
 estante = e.Estante_Juegos()
@@ -63,7 +63,7 @@ class Validar_Datos:
     def validar_modelo(self, modelo: str) -> bool:
         pattern = re.compile(self.pattern_modelo)
         if pattern.match(modelo):
-            coincidencia: Juego or None = estante.buscar_modelo(estante)
+            coincidencia: Juego or None = estante.buscar_modelo(modelo)
             if (coincidencia is None):
                 return True
             else:

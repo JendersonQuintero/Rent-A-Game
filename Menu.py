@@ -1,6 +1,6 @@
 from Juego import Juego
 import Validaciones as validar
-import Estante as e
+import Estante_Juegos as e
 import Base_Datos as b_datos
 
 v = validar.Validar_Datos()
@@ -31,7 +31,7 @@ class Menu:
             return self.opcion_guardar_salir()
 
     def mostrar_bienvenida(self) -> None:
-        return print('\n         ********** BIENVENIDO A RENT A GAME *********\n')
+        return print('\n         ********** BIENVENIDO A RENT A GAME *********')
 
     def menu_opcion(self) -> int:
         opcion = input('''\nA continuación se muestra el menú de opciones para los juegos:
@@ -101,25 +101,25 @@ class Menu:
         while True:
             modelo = input('Ingrese el modelo: ')
             if (v.validar_modelo(modelo)):
-                print('\n')
+                print('')
                 break
             else:
-                print('\n')
+                print('')
                 continue
 
         while True:
             titulo = input('Ingrese el título: ')
             if (v.validar_titulo(titulo)):
-                print('\n')
+                print('')
                 break
             else:
-                print('\n')
+                print('')
                 continue
 
         while True:
             precio = input('Ingrese el precio en Bs.: ')
             if (v.validar_precio(precio)):
-                print('\n')
+                print('')
                 break
             else:
                 continue
@@ -144,7 +144,7 @@ class Menu:
             else:
                 print('\nResultado de la busqueda:')
                 estante.mostrar_juego(coincidencia)
-                print('Acciones que puede realizar: \n')
+                print('\nAcciones que puede realizar: \n')
                 accion: int = self.menu_accion()
 
                 if (accion == 1):
@@ -193,7 +193,7 @@ class Menu:
         opcion = self.menu_busqueda()
 
         if (opcion == 1):
-            modelo: str = input('Ingrese el modelo: ')
+            modelo: str = input('\nIngrese el modelo: ')
 
             coincidencia: Juego or None = estante.buscar_modelo(modelo)
 
@@ -204,7 +204,7 @@ class Menu:
             else:
                 print('\nResultado de la busqueda:')
                 estante.mostrar_juego(coincidencia)
-                print('¿Desea alquilar este juego?')
+                print('\n¿Desea alquilar este juego?')
                 accion: int = self.menu_decidir()
 
                 if (accion == 1):
@@ -214,7 +214,7 @@ class Menu:
                 return self.retornar_inicio()
 
         elif (opcion == 2):
-            titulo: str = input('Ingrese el título: ')
+            titulo: str = input('\nIngrese el título: ')
 
             coincidencia: Juego or None = estante.buscar_titulo(titulo)
 
@@ -225,7 +225,7 @@ class Menu:
             else:
                 print('\nResultado de la busqueda:')
                 estante.mostrar_juego(coincidencia)
-                print('¿Desea alquilar este juego?')
+                print('\n¿Desea alquilar este juego?')
                 accion: int = self.menu_decidir()
 
                 if (accion == 1):
@@ -241,7 +241,7 @@ class Menu:
         opcion = self.menu_busqueda()
 
         if (opcion == 1):
-            modelo: str = input('Ingrese el modelo: ')
+            modelo: str = input('\nIngrese el modelo: ')
 
             coincidencia: Juego or None = estante.buscar_modelo(modelo)
 
@@ -252,7 +252,7 @@ class Menu:
             else:
                 print('\nResultado de la busqueda:')
                 estante.mostrar_juego(coincidencia)
-                print('¿Desea devolver este juego?')
+                print('\n¿Desea devolver este juego?')
                 accion: int = self.menu_decidir()
 
                 if (accion == 1):
@@ -262,7 +262,7 @@ class Menu:
                 return self.retornar_inicio()
 
         elif (opcion == 2):
-            titulo: str = input('Ingrese el título: ')
+            titulo: str = input('\nIngrese el título: ')
 
             coincidencia: Juego or None = estante.buscar_titulo(titulo)
 
@@ -273,7 +273,7 @@ class Menu:
             else:
                 print('\nResultado de la busqueda:')
                 estante.mostrar_juego(coincidencia)
-                print('¿Desea devolver este juego?')
+                print('\n¿Desea devolver este juego?')
                 accion: int = self.menu_decidir()
 
                 if (accion == 1):
@@ -289,7 +289,7 @@ class Menu:
         opcion = self.menu_busqueda()
 
         if (opcion == 1):
-            modelo: str = input('Ingrese el modelo: ')
+            modelo: str = input('\nIngrese el modelo: ')
 
             coincidencia: Juego or None = estante.buscar_modelo(modelo)
 
@@ -300,7 +300,7 @@ class Menu:
             else:
                 print('\nResultado de la busqueda:')
                 estante.mostrar_juego(coincidencia)
-                print('¿Desea eliminar este juego?')
+                print('\n¿Desea eliminar este juego?')
                 accion: int = self.menu_decidir()
 
                 if (accion == 1):
@@ -310,7 +310,7 @@ class Menu:
                 return self.retornar_inicio()
 
         elif (opcion == 2):
-            titulo: str = input('Ingrese el título: ')
+            titulo: str = input('\nIngrese el título: ')
 
             coincidencia: Juego or None = estante.buscar_titulo(titulo)
 
@@ -321,7 +321,7 @@ class Menu:
             else:
                 print('\nResultado de la busqueda:')
                 estante.mostrar_juego(coincidencia)
-                print('¿Desea eliminar este juego?')
+                print('\n¿Desea eliminar este juego?')
                 accion: int = self.menu_decidir()
 
                 if (accion == 1):
