@@ -48,11 +48,10 @@ class Hashing:
 
         grupo_overflow: int = self.hash(clave, len(list_o))
 
-        while True:
-            for juego in list_o[grupo_overflow]:
-                if (juego.get_modelo() == clave):
-                    return grupo_overflow, 'O'
-                else:
-                    grupo_overflow += 1
-                    continue
-            return grupo_overflow, 'N'
+        for juego in list_o[grupo_overflow]:
+            if (juego.get_modelo() == clave):
+                return grupo_overflow, 'O'
+            else:
+                grupo_overflow += 1
+                continue
+        return grupo_overflow, 'N'
