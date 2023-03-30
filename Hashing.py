@@ -3,7 +3,7 @@ class Hashing:
     def __init__(self) -> None:
         self
 
-    def hash(clave: str, espacio: int) -> int:
+    def hash(self, clave: str, espacio: int) -> int:
         acumulador: int = 0
         suma_num: int = 0
         for i in range(len(clave)):
@@ -15,7 +15,7 @@ class Hashing:
 
         return grupo
 
-    def func_hash(self, clave: str, list_p: list, list_o: list):
+    def func_hash(self, clave: str, list_p: list, list_o: list) -> tuple:
         capacidad_max_gp: int = 3
         capacidad_max_go: int = 3
 
@@ -48,7 +48,7 @@ class Hashing:
                     else:
                         break
 
-    def buscar_hash(self, clave: str, list_p: list, list_o: list):
+    def buscar_hash(self, clave: str, list_p: list, list_o: list) -> tuple:
 
         grupo: int = self.hash(clave, len(list_p))
         grupo_max = False
