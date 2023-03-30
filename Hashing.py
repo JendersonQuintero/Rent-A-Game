@@ -6,14 +6,24 @@ class Hashing:
     def hash(clave: str, espacio: int) -> int:
         acumulador: int = 0
         suma_num: int = 0
-        for i in range(len(clave)):
-            acumulador += ord(clave[i])
-            if (ord(clave[i]) >= 48 and ord(clave[i]) <= 57):
-                suma_num += int(clave[i])
+        i = 0
+        while True:
+            for i in range(len(clave)):
+                acumulador += ord(clave[i])
+                try:
+                    if (ord(clave[i]) >= 48 and ord(clave[i]) <= 57):
+                        suma_num += int(clave[i])
+                except:
+                    pass
 
-        grupo: int = (acumulador // suma_num) % espacio
+            if suma_num == 0:
+                grupo: int = 0
+                print("El modelo ingresado no es válido")
+                break
+            else:
+                grupo: int = (acumulador // suma_num) % espacio
 
-        return grupo
+            return grupo
 
     def func_hash(self, clave: str, list_p: list, list_o: list):
         capacidad_max_gp: int = 3
@@ -88,3 +98,4 @@ class Hashing:
                 grupo_overflow += 1
             else:
                 return grupo_overflow, i, 'N'
+            break

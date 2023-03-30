@@ -7,6 +7,11 @@ if __name__ == '__main__':
     estante = e.Estante_Juegos()
     menu = m.Menu()
 
+    juegos: list[Juego] = bd.cargar_Juegos()
+
+    # for juego in juegos:
+    #     estante.insertar(juego)
+
     menu.mostrar_bienvenida()
 
     opcion: int = menu.menu_opcion()

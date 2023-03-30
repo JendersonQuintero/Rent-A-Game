@@ -1,5 +1,5 @@
 from Juego import Juego
-import Validaciones as validar
+import validaciones as validar
 import Estante as e
 import Base_Datos as b_datos
 
@@ -97,7 +97,7 @@ class Menu:
         modelo: str
         titulo: str
         precio: str
-        print('\nAcontinuación se le pedirán los datos del nuevo juego: \n')
+        print('\nA continuación se le pedirán los datos del nuevo juego: \n')
         while True:
             modelo = input('Ingrese el modelo: ')
             if (v.validar_modelo(modelo)):
