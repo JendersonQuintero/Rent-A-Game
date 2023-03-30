@@ -47,11 +47,17 @@ class Estante_Juegos:
     def buscar_modelo(self, modelo: str) -> Juego:
         ubicacion: tuple = hashing.buscar_hash(
             modelo, self.estante_principal, self.estante_overflow)
-        if (ubicacion[2] == 'P'):
-            return self.estante_principal[ubicacion[0]][ubicacion[1]]
-        elif (ubicacion[2] == 'N'):
+        if (ubicacion[1] == 'P'):
+            for juego in self.estante_principal[ubicacion[0]]:
+                if (juego.get_modelo() == modelo):
+                    return juego
             return None
-        return self.estante_overflow[ubicacion[0]][ubicacion[1]]
+        elif (ubicacion[1] == 'N'):
+            return None
+        for juego in self.estante_overflow[ubicacion[0]]:
+            if (juego.get_modelo() == modelo):
+                return juego
+        return None
 
     def buscar_titulo(self, titulo: str) -> Juego:
         for indice in self.indice_titulo:
@@ -73,10 +79,15 @@ class Estante_Juegos:
     def eliminar(self, juego: Juego) -> None:
         ubicacion: tuple = hashing.buscar_hash(
             juego.get_modelo(), self.estante_principal, self.estante_overflow)
-        if (ubicacion[2] == 'P'):
-            self.estante_principal[ubicacion[0]].pop(ubicacion[1])
-            return None
-        self.estante_overflow[ubicacion[0]].pop(ubicacion[1])
+        if (ubicacion[1] == 'P'):
+            for j in range(len(self.estante_principal[ubicacion[0]])):
+                if (self.estante_principal[ubicacion[0]][j].get_modelo() == juego.get_modelo()):
+                    self.estante_principal[ubicacion[0]].pop(j)
+                    return None
+        for j in range(len(self.estante_overflow[ubicacion[0]])):
+            if (self.estante_overflow[ubicacion[0]][j].get_modelo() == juego.get_modelo()):
+                self.estante_overflow[ubicacion[0]].pop(j)
+                return None
         bd.eliminar_juego(juego)
         for i in range(len(self.indice_titulo)):
             if (self.indice_titulo[i].get_titulo() == juego.get_titulo()):

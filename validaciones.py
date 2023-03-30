@@ -63,7 +63,7 @@ class Validar_Datos:
     def validar_modelo(self, modelo: str) -> bool:
         pattern = re.compile(self.pattern_modelo)
         if pattern.match(modelo):
-            coincidencia: Juego = estante.buscar_modelo(estante)
+            coincidencia: Juego or None = estante.buscar_modelo(estante)
             if (coincidencia is None):
                 return True
             else:

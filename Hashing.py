@@ -51,14 +51,10 @@ class Hashing:
     def buscar_hash(self, clave: str, list_p: list, list_o: list) -> tuple:
 
         grupo: int = self.hash(clave, len(list_p))
-        grupo_max = False
 
-        if (grupo == (len(list_p) - 1)):
-            grupo_max = True
-
-        for i in range(len(list_p[grupo])):
-            if (list_p[grupo][i].get_modelo() == clave):
-                return grupo, i, 'P'
+        for juego in list_p[grupo]:
+            if (juego.get_modelo() == clave):
+                return grupo, 'P'
             else:
                 continue
 
@@ -71,20 +67,23 @@ class Hashing:
             grupo_max = True
 
         while True:
-            for i in range(len(list_o[grupo_overflow])):
-                if (list_o[grupo_overflow][i].get_modelo() == clave):
-                    return grupo_overflow, i, 'O'
+            for juego in list_o[grupo_overflow]:
+                if (juego.get_modelo() == clave):
+                    return grupo_overflow, 'O'
                 else:
                     continue
 
             if (grupo_max):
                 grupo_overflow = 0
-                for i in range(len(list_o[grupo_overflow])):
-                    if (list_o[grupo_overflow][i].get_modelo() == clave):
-                        return grupo_overflow, i, 'O'
+                for juego in list_o[grupo_overflow]:
+                    if (juego.get_modelo() == clave):
+                        return grupo_overflow, 'O'
                     else:
-                        grupo_overflow += 1
+                        if (grupo_overflow < (len(list_o) - 1)):
+                            grupo_overflow += 1
+                        else:
+                            break
             elif (grupo_overflow < (len(list_o) - 1)):
                 grupo_overflow += 1
             else:
-                return grupo_overflow, i, 'N'
+                return grupo_overflow, 'N'
