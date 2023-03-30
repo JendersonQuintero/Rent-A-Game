@@ -10,7 +10,8 @@ class Hashing:
             acumulador += ord(clave[i])
             if (ord(clave[i]) >= 48 and ord(clave[i]) <= 57):
                 suma_num += int(clave[i])
-
+        if (suma_num == 0):
+            suma_num = 1
         grupo: int = (acumulador // suma_num) % espacio
 
         return grupo
