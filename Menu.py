@@ -34,7 +34,7 @@ class Menu:
         return print('\n         ********** BIENVENIDO A RENT A GAME *********\n')
 
     def menu_opcion(self) -> int:
-        opcion = input('''A continuación se muestra el menú de opciones para los juegos:
+        opcion = input('''\nA continuación se muestra el menú de opciones para los juegos:
             
             1 --> Mostrar
             2 --> Agregar
@@ -139,7 +139,7 @@ class Menu:
 
             if (coincidencia is None):
                 print(
-                    f'\nNo se consiguió ningún juego con este modelo: {modelo}\n')
+                    f'\nNo se consiguió ningún juego con este modelo: {modelo}')
                 return self.opcion_buscar()
             else:
                 print('\nResultado de la busqueda:')
@@ -160,13 +160,13 @@ class Menu:
                 return self.retornar_inicio()
 
         elif (opcion == 2):
-            titulo: str = input('Ingrese el título: ')
+            titulo: str = input('\nIngrese el título: ')
 
             coincidencia: Juego or None = estante.buscar_titulo(titulo)
 
             if (coincidencia is None):
                 print(
-                    f'\nNo se consiguió ningún juego con este título: {titulo}\n')
+                    f'\nNo se consiguió ningún juego con este título: {titulo}')
                 return self.opcion_buscar()
             else:
                 print('\nResultado de la busqueda:')
