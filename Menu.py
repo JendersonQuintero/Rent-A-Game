@@ -122,6 +122,7 @@ class Menu:
                 print('')
                 break
             else:
+                print('')
                 continue
         juego: Juego = Juego(modelo, titulo, int(precio))
         estante.insertar(juego)
@@ -335,15 +336,15 @@ class Menu:
 
     def opcion_guardar(self) -> None:
         estante.guardar_juegos()
-        print('\n***** Los datos de guardaron correctamente *****\n')
+        print('\n***** Los datos de guardaron correctamente *****')
         return self.retornar_inicio()
 
     def opcion_guardar_salir(self) -> None:
         estante.guardar_juegos()
-        print('\n***** Los datos de guardaron correctamente *****\n')
+        print('\n  ***** Los datos de guardaron correctamente *****\n')
         print('\n***** Gracias por usar Rent A Game. Hasta pronto. *****\n')
         return None
 
-    def retornar_inicio(self):
+    def retornar_inicio(self) -> None:
         opcion: int = self.menu_opcion()
-        self.controlador_menu(opcion)
+        return self.controlador_menu(opcion)

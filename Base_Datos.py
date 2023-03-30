@@ -55,7 +55,7 @@ class Base_Datos:
                     juego = dato[:-1].split("//")
 
                     if (juego[0] == nuevo_juego.get_modelo()):
-                        juegos_txt += f"{nuevo_juego.get_modelo()}//{nuevo_juego.set_titulo()}//{nuevo_juego.get_precio()}//{nuevo_juego.get_status()}\n"
+                        juegos_txt += f"{nuevo_juego.get_modelo()}//{nuevo_juego.get_titulo()}//{nuevo_juego.get_precio()}//{nuevo_juego.get_status()}\n"
                     else:
                         juegos_txt += f"{juego[0]}//{juego[1]}//{juego[2]}//{juego[3]}\n"
                 with open("db_juegos.txt", 'w') as dbe:
