@@ -27,10 +27,9 @@ class Hashing:
 
         # ***** INICIO DEL OVERFLOW *****
 
-        grupo_overflow: int = self.hash(clave, len(list_o))
-
-        if (len(list_o[grupo_overflow]) <= capacidad_max_go):
-            return grupo_overflow, 'O'
+        for grupo in range(len(list_o)):
+            if (len(grupo) <= capacidad_max_go):
+                return grupo, 'O'
 
         return None
 
@@ -46,12 +45,9 @@ class Hashing:
 
         # ***** BUSQUEDA EN OVERFLOW *****
 
-        grupo_overflow: int = self.hash(clave, len(list_o))
+        for g in range(len(list_o)):
+            for juego in range(len(g)):
+                if (list_o[grupo].get_modelo() == clave):
+                    return juego, 'O'
 
-        for juego in list_o[grupo_overflow]:
-            if (juego.get_modelo() == clave):
-                return grupo_overflow, 'O'
-            else:
-                grupo_overflow += 1
-                continue
-        return grupo_overflow, 'N'
+        return 0, 'N'
