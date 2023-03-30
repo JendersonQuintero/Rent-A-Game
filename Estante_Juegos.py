@@ -94,7 +94,10 @@ class Estante_Juegos:
                 return None
         return None
 
-    def alquilar(self, juego: Juego) -> None:
+    def alquilar(self, juego: Juego) -> bool or None:
+        if (juego.get_status() == 'ALQUILADO'):
+            return None
+
         juego_actualizado: Juego = juego
         juego_actualizado.set_status('ALQUILADO')
 
@@ -105,17 +108,20 @@ class Estante_Juegos:
                 if (self.estante_principal[ubicacion[0]][j].get_modelo() == juego.get_modelo()):
                     self.estante_principal[ubicacion[0]][j] = juego_actualizado
                     bd.actualizar_juego(juego_actualizado)
-                    return None
+                    return True
             return None
 
         for j in range(len(self.estante_overflow[ubicacion[0]])):
             if (self.estante_overflow[ubicacion[0]][j].get_modelo() == juego.get_modelo()):
                 self.estante_overflow[ubicacion[0]][j] = juego_actualizado
                 bd.actualizar_juego(juego_actualizado)
-                return None
+                return True
         return None
 
-    def devolver(self, juego: Juego) -> None:
+    def devolver(self, juego: Juego) -> bool or None:
+        if (juego.get_status() == 'ES STOCK'):
+            return None
+
         juego_actualizado: Juego = juego
         juego_actualizado.set_status('EN STOCK')
 
@@ -126,14 +132,14 @@ class Estante_Juegos:
                 if (self.estante_principal[ubicacion[0]][j].get_modelo() == juego.get_modelo()):
                     self.estante_principal[ubicacion[0]][j] = juego_actualizado
                     bd.actualizar_juego(juego_actualizado)
-                    return None
+                    return True
             return None
 
         for j in range(len(self.estante_overflow[ubicacion[0]])):
             if (self.estante_overflow[ubicacion[0]][j].get_modelo() == juego.get_modelo()):
                 self.estante_overflow[ubicacion[0]][j] = juego_actualizado
                 bd.actualizar_juego(juego_actualizado)
-                return None
+                return True
         return None
 
     def guardar_juegos(self) -> None:

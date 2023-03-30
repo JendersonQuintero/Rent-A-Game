@@ -149,10 +149,18 @@ class Menu:
                 accion: int = self.menu_accion()
 
                 if (accion == 1):
-                    estante.alquilar(coincidencia)
+                    res: bool or None = estante.alquilar(coincidencia)
+                    if (res is None):
+                        print(
+                            '\nAcción inválida. El juegos ya se encuentra alquilado\n')
+                        return self.opcion_buscar()
                     print('\n***** El juego ha sido alquilado *****\\n')
                 elif (accion == 2):
-                    estante.devolver(coincidencia)
+                    res: bool or None = estante.devolver(coincidencia)
+                    if (res is None):
+                        print(
+                            '\nAcción inválida. El juegos ya se encuentra en stock\n')
+                        return self.opcion_buscar()
                     print('\n***** El juego ha sido devuelto *****\n')
                 elif (accion == 3):
                     estante.eliminar(coincidencia)
@@ -176,10 +184,18 @@ class Menu:
                 accion: int = self.menu_accion()
 
                 if (accion == 1):
-                    estante.alquilar(coincidencia)
+                    res: bool or None = estante.alquilar(coincidencia)
+                    if (res is None):
+                        print(
+                            '\nAcción inválida. El juegos ya se encuentra alquilado\n')
+                        return self.opcion_buscar()
                     print('\n***** El juego ha sido alquilado *****\n')
                 elif (accion == 2):
-                    estante.devolver(coincidencia)
+                    res: bool or None = estante.devolver(coincidencia)
+                    if (res is None):
+                        print(
+                            '\nAcción inválida. El juegos ya se encuentra en stock\n')
+                        return self.opcion_buscar()
                     print('\n***** El juego ha sido devuelto *****\n')
                 elif (accion == 3):
                     estante.eliminar(coincidencia)
@@ -209,7 +225,12 @@ class Menu:
                 accion: int = self.menu_decidir()
 
                 if (accion == 1):
-                    estante.alquilar(coincidencia)
+                    res: bool or None = estante.alquilar(coincidencia)
+                    if (res is None):
+                        print(
+                            '\nAcción inválida. El juegos ya se encuentra alquilado\n')
+                        return self.opcion_alquilar()
+
                     print('\n***** El juego ha sido alquilado *****\n')
 
                 return self.retornar_inicio()
@@ -230,7 +251,11 @@ class Menu:
                 accion: int = self.menu_decidir()
 
                 if (accion == 1):
-                    estante.alquilar(coincidencia)
+                    res: bool or None = estante.alquilar(coincidencia)
+                    if (res is None):
+                        print(
+                            '\nAcción inválida. El juegos ya se encuentra alquilado\n')
+                        return self.opcion_alquilar()
                     print('\n***** El juego ha sido alquilado *****\n')
 
                 return self.retornar_inicio()
@@ -257,7 +282,11 @@ class Menu:
                 accion: int = self.menu_decidir()
 
                 if (accion == 1):
-                    estante.devolver(coincidencia)
+                    res: bool or None = estante.devolver(coincidencia)
+                    if (res is None):
+                        print(
+                            '\nAcción inválida. El juegos ya se encuentra en stock\n')
+                        return self.opcion_devolver()
                     print('\n***** El juego ha sido devuelto *****\n')
 
                 return self.retornar_inicio()
@@ -278,7 +307,11 @@ class Menu:
                 accion: int = self.menu_decidir()
 
                 if (accion == 1):
-                    estante.devolver(coincidencia)
+                    res: bool or None = estante.devolver(coincidencia)
+                    if (res is None):
+                        print(
+                            '\nAcción inválida. El juegos ya se encuentra en stock\n')
+                        return self.opcion_alquilar()
                     print('\n***** El juego ha sido devuelto *****\n')
 
                 return self.retornar_inicio()
