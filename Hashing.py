@@ -75,14 +75,7 @@ class Hashing:
 
             if (grupo_max):
                 grupo_overflow = 0
-                for juego in list_o[grupo_overflow]:
-                    if (juego.get_modelo() == clave):
-                        return grupo_overflow, 'O'
-                    else:
-                        if (grupo_overflow < (len(list_o) - 1)):
-                            grupo_overflow += 1
-                        else:
-                            break
+                grupo_max = False
             elif (grupo_overflow < (len(list_o) - 1)):
                 grupo_overflow += 1
             else:

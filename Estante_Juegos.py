@@ -95,11 +95,45 @@ class Estante_Juegos:
         return None
 
     def alquilar(self, juego: Juego) -> None:
-        nuevo_juego: Juego = juego.set_status('ALQUILADO')
+        juego_actualizado: Juego = juego
+        juego_actualizado.set_status('ALQUILADO')
+
+        ubicacion: tuple = hashing.buscar_hash(
+            juego.get_modelo(), self.estante_principal, self.estante_overflow)
+        if (ubicacion[1] == 'P'):
+            for j in range(len(self.estante_principal[ubicacion[0]])):
+                if (self.estante_principal[ubicacion[0]][j].get_modelo() == juego.get_modelo()):
+                    self.estante_principal[ubicacion[0]][j] = juego_actualizado
+                    bd.actualizar_juego(juego_actualizado)
+                    return None
+            return None
+
+        for j in range(len(self.estante_overflow[ubicacion[0]])):
+            if (self.estante_overflow[ubicacion[0]][j].get_modelo() == juego.get_modelo()):
+                self.estante_overflow[ubicacion[0]][j] = juego_actualizado
+                bd.actualizar_juego(juego_actualizado)
+                return None
         return None
 
     def devolver(self, juego: Juego) -> None:
-        juego.set_status('EN STOCK')
+        juego_actualizado: Juego = juego
+        juego_actualizado.set_status('EN STOCK')
+
+        ubicacion: tuple = hashing.buscar_hash(
+            juego.get_modelo(), self.estante_principal, self.estante_overflow)
+        if (ubicacion[1] == 'P'):
+            for j in range(len(self.estante_principal[ubicacion[0]])):
+                if (self.estante_principal[ubicacion[0]][j].get_modelo() == juego.get_modelo()):
+                    self.estante_principal[ubicacion[0]][j] = juego_actualizado
+                    bd.actualizar_juego(juego_actualizado)
+                    return None
+            return None
+
+        for j in range(len(self.estante_overflow[ubicacion[0]])):
+            if (self.estante_overflow[ubicacion[0]][j].get_modelo() == juego.get_modelo()):
+                self.estante_overflow[ubicacion[0]][j] = juego_actualizado
+                bd.actualizar_juego(juego_actualizado)
+                return None
         return None
 
     def guardar_juegos(self) -> None:
