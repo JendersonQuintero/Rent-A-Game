@@ -32,12 +32,14 @@ class Estante_Juegos:
         print(
             f'\nModelo: {juego.get_modelo()}\nTítulo: {juego.get_titulo()}\nPrecio: Bs. {juego.get_precio()}\nStatus: {juego.get_status()}')
 
-    def insertar(self, juego: Juego) -> None:
-        ubicacion: tuple = hashing.func_hash(
+    def insertar(self, juego: Juego) -> bool or None:
+        ubicacion: tuple or None = hashing.func_hash(
             juego.get_modelo(), self.estante_principal, self.estante_overflow)
 
         if (ubicacion[1] == 'P'):
             self.estante_principal[ubicacion[0]].append(juego)
+        elif (ubicacion is None):
+            return False
         else:
             self.estante_overflow[ubicacion[0]].append(juego)
 

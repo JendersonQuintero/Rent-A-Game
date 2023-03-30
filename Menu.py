@@ -125,7 +125,11 @@ class Menu:
                 print('')
                 continue
         juego: Juego = Juego(modelo, titulo, int(precio))
-        estante.insertar(juego)
+        res = estante.insertar(juego)
+        if (res is False):
+            print('\nEl estante principal y overflow está lleno\n')
+            return self.retornar_inicio()
+
         estante.almacenar_juego(juego)
         print('\n***** El juego fue agregado al estante *****\n')
         return self.retornar_inicio()
