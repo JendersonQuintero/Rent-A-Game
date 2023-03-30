@@ -1,4 +1,8 @@
 import re
+import Estante as e
+from Juego import Juego
+
+estante = e.Estante_Juegos()
 
 
 class Validar_Datos:
@@ -59,16 +63,28 @@ class Validar_Datos:
     def validar_modelo(self, modelo: str) -> bool:
         pattern = re.compile(self.pattern_modelo)
         if pattern.match(modelo):
-            return True
+            coincidencia: Juego = estante.buscar_modelo(estante)
+            if (coincidencia is None):
+                return True
+            else:
+                print('\nEl modelo ingresado ya existe\n')
+                False
         else:
-            print('\nEl modelo de contener 6 letras y 2 número. Ejem: "ABCDEF12"\n')
+            print(
+                '\nEl modelo de contener 6 letras y 2 números respectivamente. Ejem: "ABCDEF12"\n')
             return False
 
     def validar_titulo(self, titulo: str) -> bool:
         if (len(titulo) > 10):
             print('\nEl título no debe exceder los 10 caracteres\n')
             return False
-        return True
+        else:
+            coincidencia: Juego = estante.buscar_titulo(titulo)
+            if (coincidencia is None):
+                return True
+            else:
+                print('\nEl título ingresado ya existe\n')
+                return False
 
     def validar_precio(self, precio: str) -> bool:
         try:

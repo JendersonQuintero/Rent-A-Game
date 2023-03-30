@@ -1,16 +1,17 @@
-import Estante as e
+from Juego import Juego
 import Base_Datos as b_datos
+import Estante as e
 import Menu as m
 
 if __name__ == '__main__':
     bd = b_datos.Base_Datos()
-    estante = e.Estante_Juegos()
+    estante: e = e.Estante_Juegos()
     menu = m.Menu()
 
     juegos: list[Juego] = bd.cargar_Juegos()
 
-    # for juego in juegos:
-    #     estante.insertar(juego)
+    for juego in juegos:
+        estante.insertar(juego)
 
     menu.mostrar_bienvenida()
 

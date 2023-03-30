@@ -1,20 +1,21 @@
 from Juego import Juego
 from Indice import Indice
-from Hashing import Hashing
+import Hashing as h
+import Base_Datos as b_datos
 
-# ***** ESTATUS PARA CONTROL DE COORDENADA *****
-# * V = VACIO
+bd = b_datos.Base_Datos()
+hashing = h.Hashing()
 
 
 class Estante_Juegos:
 
-    estante_principal = [[] * 3]
+    estante_principal: list = [[] * 3]
 
-    indice_titulo = []
+    indice_titulo: list[Indice] = []
 
-    estante_overflow = [[] * 6]
+    estante_overflow: list = [[] * 6]
 
-    def __init__(self):
+    def __init__(self) -> None:
         self
 
     def mostrar_juegos(self) -> None:
@@ -33,7 +34,7 @@ class Estante_Juegos:
             f'\nModelo: {juego.get_modelo()}\nTítulo: {juego.get_titulo()}\nPrecio: Bs. {juego.get_precio()}\nStatus: {juego.get_status()}')
 
     def insertar(self, juego: Juego) -> None:
-        ubicacion: tuple = Hashing.func_hash(
+        ubicacion: tuple = hashing.func_hash(
             juego.get_modelo(), self.estante_principal, self.estante_overflow)
 
         if (ubicacion[1] == 'P'):
@@ -44,7 +45,7 @@ class Estante_Juegos:
         self.indice_titulo.append(Indice(juego.get_titulo(), ubicacion))
 
     def buscar_modelo(self, modelo: str) -> Juego:
-        ubicacion: tuple = Hashing.buscar_hash(
+        ubicacion: tuple = hashing.buscar_hash(
             modelo, self.estante_principal, self.estante_overflow)
         if (ubicacion[2] == 'P'):
             return self.estante_principal[ubicacion[0]][ubicacion[1]]
@@ -53,33 +54,34 @@ class Estante_Juegos:
         return self.estante_overflow[ubicacion[0]][ubicacion[1]]
 
     def buscar_titulo(self, titulo: str) -> Juego:
-        for i in self.indice_titulo:
-            if (i.get_titulo() == titulo):
-                ubicacion = i.get_ubicacion()
-                if (ubicacion[2] == 'P'):
-                    return self.estante_principal[ubicacion[0]][ubicacion[1]]
-
-                return self.estante_overflow[ubicacion[0]][ubicacion[1]]
+        for indice in self.indice_titulo:
+            if (indice.get_titulo().upper() == titulo.upper()):
+                ubicacion = indice.get_ubicacion()
+                if (ubicacion[1] == 'P'):
+                    for juego in self.estante_principal[ubicacion[0]]:
+                        if (juego.get_titulo().upper() == titulo.upper()):
+                            return juego
+                    return None
+                else:
+                    for juego in self.estante_overflow[ubicacion[0]]:
+                        if (juego.get_titulo().upper() == titulo.upper()):
+                            return juego
             else:
                 continue
         return None
 
-    def eliminar_modelo(self, modelo: str) -> None:
-        ubicacion: tuple = Hashing.buscar_hash(
-            modelo, self.estante_principal, self.estante_overflow)
-        if (ubicacion[2] == 'P'):
-            self.estante_principal[ubicacion[0]][ubicacion[1]] = 'V'
-            return None
-        self.estante_overflow[ubicacion[0]][ubicacion[1]] = 'V'
-        return None
-
     def eliminar(self, juego: Juego) -> None:
-        ubicacion: tuple = Hashing.buscar_hash(
+        ubicacion: tuple = hashing.buscar_hash(
             juego.get_modelo(), self.estante_principal, self.estante_overflow)
         if (ubicacion[2] == 'P'):
-            self.estante_principal[ubicacion[0]][ubicacion[1]] = 'V'
+            self.estante_principal[ubicacion[0]].pop(ubicacion[1])
             return None
-        self.estante_overflow[ubicacion[0]][ubicacion[1]] = 'V'
+        self.estante_overflow[ubicacion[0]].pop(ubicacion[1])
+        bd.eliminar_juego(juego)
+        for i in range(len(self.indice_titulo)):
+            if (self.indice_titulo[i].get_titulo() == juego.get_titulo()):
+                self.indice_titulo.pop(i)
+                return None
         return None
 
     def alquilar(self, juego: Juego) -> None:
@@ -90,13 +92,20 @@ class Estante_Juegos:
         juego.set_status('EN STOCK')
         return None
 
+    def guardar_juegos(self) -> None:
+        juegos_txt: str = ''
 
-# juego = Juego('SPACEI13', 'La Prueba', 999)
-# juego2 = Juego('ABCDEF99', 'El Cambio', 666)
-# estante = Estante_Juegos()
-# estante.insertar(juego)
-# estante.insertar(juego2)
+        for grupo in self.estante_principal:
+            for juego in grupo:
+                juegos_txt += f"{juego.get_modelo()}//{juego.get_titulo()}//{juego.get_precio()}//{juego.get_status()}\n"
 
-# estante.mostrar_juegos()
+        for grupo in self.estante_overflow:
+            for juego in grupo:
+                f"{juego.get_modelo()}//{juego.get_titulo()}//{juego.get_precio()}//{juego.get_status()}\n"
 
-# print(estante.buscar_titulo('La Prueba').get_modelo())
+        bd.guardar_juegos(juegos_txt)
+        return None
+
+    def almacenar_juego(self, juego: Juego) -> None:
+        bd.guardar_juego(juego)
+        return None
