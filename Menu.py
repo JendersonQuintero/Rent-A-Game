@@ -117,7 +117,7 @@ class Menu:
                 continue
 
         while True:
-            precio = input('Ingrese el precio: ')
+            precio = input('Ingrese el precio en Bs.: ')
             if (v.validar_precio(precio)):
                 print('\n')
                 break
@@ -125,6 +125,7 @@ class Menu:
                 continue
         juego: Juego = Juego(modelo, titulo, int(precio))
         estante.insertar(juego)
+        estante.almacenar_juego(juego)
         print('\n***** El juego fue agregado al estante *****\n')
         return self.retornar_inicio()
 

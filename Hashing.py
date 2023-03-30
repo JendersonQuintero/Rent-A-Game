@@ -79,7 +79,7 @@ class Hashing:
 
             if (grupo_max):
                 grupo_overflow = 0
-                for i in range(len(list_o[grupo_overflow]) - 1):
+                for i in range(len(list_o[grupo_overflow])):
                     if (list_o[grupo_overflow][i].get_modelo() == clave):
                         return grupo_overflow, i, 'O'
                     else:

@@ -42,7 +42,6 @@ class Estante_Juegos:
         else:
             self.estante_overflow[ubicacion[0]].append(juego)
 
-        bd.guardar_juego(juego)
         self.indice_titulo.append(Indice(juego.get_titulo(), ubicacion))
 
     def buscar_modelo(self, modelo: str) -> Juego:
@@ -55,13 +54,18 @@ class Estante_Juegos:
         return self.estante_overflow[ubicacion[0]][ubicacion[1]]
 
     def buscar_titulo(self, titulo: str) -> Juego:
-        for i in self.indice_titulo:
-            if (i.get_titulo() == titulo):
-                ubicacion = i.get_ubicacion()
-                if (ubicacion[2] == 'P'):
-                    return self.estante_principal[ubicacion[0]][ubicacion[1]]
-
-                return self.estante_overflow[ubicacion[0]][ubicacion[1]]
+        for indice in self.indice_titulo:
+            if (indice.get_titulo().upper() == titulo.upper()):
+                ubicacion = indice.get_ubicacion()
+                if (ubicacion[1] == 'P'):
+                    for juego in self.estante_principal[ubicacion[0]]:
+                        if (juego.get_titulo().upper() == titulo.upper()):
+                            return juego
+                    return None
+                else:
+                    for juego in self.estante_overflow[ubicacion[0]]:
+                        if (juego.get_titulo().upper() == titulo.upper()):
+                            return juego
             else:
                 continue
         return None
@@ -100,4 +104,8 @@ class Estante_Juegos:
                 f"{juego.get_modelo()}//{juego.get_titulo()}//{juego.get_precio()}//{juego.get_status()}\n"
 
         bd.guardar_juegos(juegos_txt)
+        return None
+
+    def almacenar_juego(self, juego: Juego) -> None:
+        bd.guardar_juego(juego)
         return None
