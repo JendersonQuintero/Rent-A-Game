@@ -28,4 +28,4 @@ class Juego:
         self.precio = new_precio
 
     def set_status(self, new_status) -> None:
-        self.set_status = new_status
+        self.status = new_status

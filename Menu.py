@@ -1,6 +1,6 @@
 from Juego import Juego
-import validaciones as validar
-import Estante as e
+import Validaciones as validar
+import Estante_Juegos as e
 import Base_Datos as b_datos
 
 v = validar.Validar_Datos()
@@ -31,7 +31,7 @@ class Menu:
             return self.opcion_guardar_salir()
 
     def mostrar_bienvenida(self) -> None:
-        return print('\n         ********** BIENVENIDO A RENT A GAME *********\n')
+        return print('\n         ********** BIENVENIDO A RENT A GAME *********')
 
     def menu_opcion(self) -> int:
         opcion = input('''\nA continuación se muestra el menú de opciones para los juegos:
@@ -101,30 +101,35 @@ class Menu:
         while True:
             modelo = input('Ingrese el modelo: ')
             if (v.validar_modelo(modelo)):
-                print('\n')
+                print('')
                 break
             else:
-                print('\n')
+                print('')
                 continue
 
         while True:
             titulo = input('Ingrese el título: ')
             if (v.validar_titulo(titulo)):
-                print('\n')
+                print('')
                 break
             else:
-                print('\n')
+                print('')
                 continue
 
         while True:
             precio = input('Ingrese el precio en Bs.: ')
             if (v.validar_precio(precio)):
-                print('\n')
+                print('')
                 break
             else:
+                print('')
                 continue
         juego: Juego = Juego(modelo, titulo, int(precio))
-        estante.insertar(juego)
+        res = estante.insertar(juego)
+        if (res is False):
+            print('\nEl estante principal y overflow está lleno\n')
+            return self.retornar_inicio()
+
         estante.almacenar_juego(juego)
         print('\n***** El juego fue agregado al estante *****\n')
         return self.retornar_inicio()
@@ -144,14 +149,22 @@ class Menu:
             else:
                 print('\nResultado de la busqueda:')
                 estante.mostrar_juego(coincidencia)
-                print('Acciones que puede realizar: \n')
+                print('\nAcciones que puede realizar: \n')
                 accion: int = self.menu_accion()
 
                 if (accion == 1):
-                    estante.alquilar(coincidencia)
+                    res: bool or None = estante.alquilar(coincidencia)
+                    if (res is None):
+                        print(
+                            '\nAcción inválida. El juegos ya se encuentra alquilado\n')
+                        return self.opcion_buscar()
                     print('\n***** El juego ha sido alquilado *****\\n')
                 elif (accion == 2):
-                    estante.devolver(coincidencia)
+                    res: bool or None = estante.devolver(coincidencia)
+                    if (res is None):
+                        print(
+                            '\nAcción inválida. El juegos ya se encuentra en stock\n')
+                        return self.opcion_buscar()
                     print('\n***** El juego ha sido devuelto *****\n')
                 elif (accion == 3):
                     estante.eliminar(coincidencia)
@@ -175,10 +188,18 @@ class Menu:
                 accion: int = self.menu_accion()
 
                 if (accion == 1):
-                    estante.alquilar(coincidencia)
+                    res: bool or None = estante.alquilar(coincidencia)
+                    if (res is None):
+                        print(
+                            '\nAcción inválida. El juegos ya se encuentra alquilado\n')
+                        return self.opcion_buscar()
                     print('\n***** El juego ha sido alquilado *****\n')
                 elif (accion == 2):
-                    estante.devolver(coincidencia)
+                    res: bool or None = estante.devolver(coincidencia)
+                    if (res is None):
+                        print(
+                            '\nAcción inválida. El juegos ya se encuentra en stock\n')
+                        return self.opcion_buscar()
                     print('\n***** El juego ha sido devuelto *****\n')
                 elif (accion == 3):
                     estante.eliminar(coincidencia)
@@ -193,7 +214,7 @@ class Menu:
         opcion = self.menu_busqueda()
 
         if (opcion == 1):
-            modelo: str = input('Ingrese el modelo: ')
+            modelo: str = input('\nIngrese el modelo: ')
 
             coincidencia: Juego or None = estante.buscar_modelo(modelo)
 
@@ -204,17 +225,22 @@ class Menu:
             else:
                 print('\nResultado de la busqueda:')
                 estante.mostrar_juego(coincidencia)
-                print('¿Desea alquilar este juego?')
+                print('\n¿Desea alquilar este juego?')
                 accion: int = self.menu_decidir()
 
                 if (accion == 1):
-                    estante.alquilar(coincidencia)
+                    res: bool or None = estante.alquilar(coincidencia)
+                    if (res is None):
+                        print(
+                            '\nAcción inválida. El juegos ya se encuentra alquilado\n')
+                        return self.opcion_alquilar()
+
                     print('\n***** El juego ha sido alquilado *****\n')
 
                 return self.retornar_inicio()
 
         elif (opcion == 2):
-            titulo: str = input('Ingrese el título: ')
+            titulo: str = input('\nIngrese el título: ')
 
             coincidencia: Juego or None = estante.buscar_titulo(titulo)
 
@@ -225,11 +251,15 @@ class Menu:
             else:
                 print('\nResultado de la busqueda:')
                 estante.mostrar_juego(coincidencia)
-                print('¿Desea alquilar este juego?')
+                print('\n¿Desea alquilar este juego?')
                 accion: int = self.menu_decidir()
 
                 if (accion == 1):
-                    estante.alquilar(coincidencia)
+                    res: bool or None = estante.alquilar(coincidencia)
+                    if (res is None):
+                        print(
+                            '\nAcción inválida. El juegos ya se encuentra alquilado\n')
+                        return self.opcion_alquilar()
                     print('\n***** El juego ha sido alquilado *****\n')
 
                 return self.retornar_inicio()
@@ -241,7 +271,7 @@ class Menu:
         opcion = self.menu_busqueda()
 
         if (opcion == 1):
-            modelo: str = input('Ingrese el modelo: ')
+            modelo: str = input('\nIngrese el modelo: ')
 
             coincidencia: Juego or None = estante.buscar_modelo(modelo)
 
@@ -252,17 +282,21 @@ class Menu:
             else:
                 print('\nResultado de la busqueda:')
                 estante.mostrar_juego(coincidencia)
-                print('¿Desea devolver este juego?')
+                print('\n¿Desea devolver este juego?')
                 accion: int = self.menu_decidir()
 
                 if (accion == 1):
-                    estante.devolver(coincidencia)
+                    res: bool or None = estante.devolver(coincidencia)
+                    if (res is None):
+                        print(
+                            '\nAcción inválida. El juegos ya se encuentra en stock\n')
+                        return self.opcion_devolver()
                     print('\n***** El juego ha sido devuelto *****\n')
 
                 return self.retornar_inicio()
 
         elif (opcion == 2):
-            titulo: str = input('Ingrese el título: ')
+            titulo: str = input('\nIngrese el título: ')
 
             coincidencia: Juego or None = estante.buscar_titulo(titulo)
 
@@ -273,11 +307,15 @@ class Menu:
             else:
                 print('\nResultado de la busqueda:')
                 estante.mostrar_juego(coincidencia)
-                print('¿Desea devolver este juego?')
+                print('\n¿Desea devolver este juego?')
                 accion: int = self.menu_decidir()
 
                 if (accion == 1):
-                    estante.devolver(coincidencia)
+                    res: bool or None = estante.devolver(coincidencia)
+                    if (res is None):
+                        print(
+                            '\nAcción inválida. El juegos ya se encuentra en stock\n')
+                        return self.opcion_alquilar()
                     print('\n***** El juego ha sido devuelto *****\n')
 
                 return self.retornar_inicio()
@@ -289,7 +327,7 @@ class Menu:
         opcion = self.menu_busqueda()
 
         if (opcion == 1):
-            modelo: str = input('Ingrese el modelo: ')
+            modelo: str = input('\nIngrese el modelo: ')
 
             coincidencia: Juego or None = estante.buscar_modelo(modelo)
 
@@ -300,7 +338,7 @@ class Menu:
             else:
                 print('\nResultado de la busqueda:')
                 estante.mostrar_juego(coincidencia)
-                print('¿Desea eliminar este juego?')
+                print('\n¿Desea eliminar este juego?')
                 accion: int = self.menu_decidir()
 
                 if (accion == 1):
@@ -310,7 +348,7 @@ class Menu:
                 return self.retornar_inicio()
 
         elif (opcion == 2):
-            titulo: str = input('Ingrese el título: ')
+            titulo: str = input('\nIngrese el título: ')
 
             coincidencia: Juego or None = estante.buscar_titulo(titulo)
 
@@ -321,7 +359,7 @@ class Menu:
             else:
                 print('\nResultado de la busqueda:')
                 estante.mostrar_juego(coincidencia)
-                print('¿Desea eliminar este juego?')
+                print('\n¿Desea eliminar este juego?')
                 accion: int = self.menu_decidir()
 
                 if (accion == 1):
@@ -335,15 +373,15 @@ class Menu:
 
     def opcion_guardar(self) -> None:
         estante.guardar_juegos()
-        print('\n***** Los datos de guardaron correctamente *****\n')
+        print('\n***** Los datos de guardaron correctamente *****')
         return self.retornar_inicio()
 
     def opcion_guardar_salir(self) -> None:
         estante.guardar_juegos()
-        print('\n***** Los datos de guardaron correctamente *****\n')
+        print('\n  ***** Los datos de guardaron correctamente *****\n')
         print('\n***** Gracias por usar Rent A Game. Hasta pronto. *****\n')
         return None
 
-    def retornar_inicio(self):
+    def retornar_inicio(self) -> None:
         opcion: int = self.menu_opcion()
-        self.controlador_menu(opcion)
+        return self.controlador_menu(opcion)

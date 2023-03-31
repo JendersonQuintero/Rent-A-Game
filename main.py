@@ -1,6 +1,6 @@
 from Juego import Juego
 import Base_Datos as b_datos
-import Estante as e
+import Estante_Juegos as e
 import Menu as m
 
 if __name__ == '__main__':
